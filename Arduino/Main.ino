@@ -2,6 +2,8 @@
   Main file for the Arduino program.
   
 */
+// Include libraries :
+#include <MS5803_02BA.h>
 
 // Variables globales
 const int cSPin = 7;
