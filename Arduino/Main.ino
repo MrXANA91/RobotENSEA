@@ -2,8 +2,13 @@
   Main file for the Arduino program.
   
 */
+
+// Variables globales
+const int cSPin = 7;
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
+
+MS5803_02BA sensor(cSPin); // initialisation du capteur de pression
 
 void setup(){
   
