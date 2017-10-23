@@ -13,11 +13,16 @@ boolean stringComplete = false;  // whether the string is complete
 MS5803_02BA sensor(cSPin); // initialisation du capteur de pression
 
 void setup(){
-  
   // initialize serial:
   Serial.begin(9600);
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
+  
+  // Initialize SPI
+  SPI.begin();
+  
+  // Reset sensor
+  sensor.resetSensor();
 }
 
 void loop(){
