@@ -7,16 +7,13 @@
 #include "MS5803_02BA.h"
 
 // PUBLIC :
-// @brief : Constructor
+// @brief : Constructor.
+// Vous devrez initialiser le bus SPI et envoyer un signal de reset au capteur avant utilisation.
 MS5803_02BA::MS5803_02BA(int _chipSelectPin)
 {
-	// Initialisation des broches SPI et CS
+	// Initialisation du CS
 	pinMode(_chipSelectPin, OUTPUT);
 	chipSelectPin = _chipSelectPin;
-	SPI.begin();
-	
-	// Reset du capteur 
-	resetSensor();
 }
 
 // @brief : getValues (utilisation de pointeurs)
