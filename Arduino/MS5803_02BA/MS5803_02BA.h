@@ -9,20 +9,20 @@
 #include <SPI.h>
 
 // constantes de commandes
-#define RESET 0x1E
-#define CONVERTD1_256 0x40
-#define CONVERTD1_512 0x42
-#define CONVERTD1_1024 0x44
-#define CONVERTD1_2048 0x46
-#define CONVERTD1_4096 0x48
-#define CONVERTD2_256 0x50
-#define CONVERTD2_512 0x52
-#define CONVERTD2_1024 0x54
-#define CONVERTD2_2048 0x56
-#define CONVERTD2_4096 0x58
-#define ADC_READ 0x00
-#define PROM_READ 0xA0
-#define NONE 0x00
+const int RESET = 0x1E;
+const int CONVERTD1_256 = 0x40;
+const int CONVERTD1_512 = 0x42;
+const int CONVERTD1_1024 = 0x44;
+const int CONVERTD1_2048 = 0x46;
+const int CONVERTD1_4096 = 0x48;
+const int CONVERTD2_256 = 0x50;
+const int CONVERTD2_512 = 0x52;
+const int CONVERTD2_1024 = 0x54;
+const int CONVERTD2_2048 = 0x56;
+const int CONVERTD2_4096 = 0x58;
+const int ADC_READ = 0x00;
+const int PROM_READ = 0xA0;
+const int NONE = 0x00;
 
 // constantes d'erreur
 #define MS5803_02BA_OK 0
@@ -42,12 +42,12 @@ class MS5803_02BA
 		// Pin CS
 		int chipSelectPin;
 		// Variable de la PROM
-		int C1,C2,C3,C4,C5,C6;
+		unsigned int C1,C2,C3,C4,C5,C6;
 		// Pression (D1) et Température (D2) non compensée
 		unsigned long D1,D2;
 		
 		// Fonctions/méthodes
-		int readProm(int);
+		unsigned int readProm(int);
 		int readAndWriteSPI(int);
 		unsigned long readADC(void);
 		void temperatureCompensatedPressure(unsigned long*, unsigned long*, unsigned long, unsigned long);
