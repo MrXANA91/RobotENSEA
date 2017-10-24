@@ -116,7 +116,7 @@ void MS5803_02BA::resetSensor(){
 
 // PRIVATE :
 // @brief : fonction pour la lecture de la PROM
-int MS5803_02BA::readProm(int adress) {
+unsigned int MS5803_02BA::readProm(int adress) {
   int res,res2;
 
   digitalWrite(chipSelectPin, LOW);
