@@ -1,3 +1,5 @@
+# License TXT of pistreaming example
+
 Copyright 2014 Dave Hughes <dave@waveform.org.uk>
 
 Redistribution and use in source and binary forms, with or without
