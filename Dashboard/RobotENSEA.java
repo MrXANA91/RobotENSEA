@@ -125,12 +125,11 @@ class RobotENSEA extends JFrame implements ActionListener{
 			}
 			if (connected) {
 				try {
-					console.append("Mise à jour de l'horloge interne...\n");
+					console.append("Mise à jour de l'horloge interne du robot.\n");
 					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 					PrintStream out = new PrintStream(socket.getOutputStream());
 					String comnd = "init:"+String.valueOf(timestamp.getTime());
 					out.println(comnd);
-					console.append("Date actuelle envoyée.\n");
 					console.append("Initialisation terminée.");
 				} catch (Exception ex) {
 					console.append("Erreur de communication avec le robot.\n");
