@@ -1,0 +1,8 @@
+Lors de l'initialisation de la connexion : 
+	- 'init:[timestamp]' --> mettre à l'heure la Raspberry Pi
+	- 'diagnose' --> diagnostic complet des périphériques (réponse ? Si oui lecture, si non erreur)
+	- 'mode:['manual'|'semiauto']' --> mode (par défaut, semiauto ?)
+	- 'ultrasnd:['1'|'2'|'3'|'4']' --> lecture de la distance
+	- 'press_tp' --> lecture de la pression et de la température
+	- 'carbmono' --> lecture de la teneur en CO
+	- 'motor:['left'|'right'];['forward'|'backward'|'stop'];['full'|'stop']' --> contrôle des moteurs (à revoir)
