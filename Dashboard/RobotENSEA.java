@@ -164,8 +164,15 @@ class RobotENSEA extends JFrame implements ActionListener{
 			}
 		} else if(cmd.toLowerCase().startsWith("send")){
 			String parts[] = cmd.split(" ");
+			String sout;
 			if (connected && parts.length==2){
 				sendComm(parts[1],socket);
+				sout = rcvComm(socket);
+				if (sout.equals(null)){
+					console.append("Nothing came from the robot.");
+				} else {
+					classicLogFunction(sout);
+				}
 			} else {
 				if (!connected){
 					console.append("Connexion au robot inexistante.");
@@ -173,6 +180,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 				if (parts.length!=2){
 					console.append("Utilisation : send [command]:[args]");
 				}
+				
 			}
 		} else if(cmd.equalsIgnoreCase("authors")){			// Menu "A propos"
 			console.append("Tu as appuyé sur "+cmd+"");
@@ -219,13 +227,37 @@ class RobotENSEA extends JFrame implements ActionListener{
 			Date maDate = new Date();
 			bw.write("RobotENSEA-Control-Panel-Dashboard-Error(s)-log : ");
 			bw.write(maDate.toString());
-			bw.write("\n");
+			bw.newLine();
 			bw.write(sStackTrace);
+			bw.newLine();
 			bw.close();
 			console.append("Veuillez vous referer au journal d'erreurs créé.");
 		} catch (Exception ex2) {
 			e.printStackTrace();
 			console.append("Le journal d'erreurs 'robotensea_error.log' n'a pas pu être créé/édité.\n");
+			console.append("Veuillez vous referer à la console du terminal.");
+		}
+	}
+	
+	public void classicLogFunction(String towrite) {
+		try {
+			File monFichier = new File("robotensea_log.log");
+			FileWriter fw = new FileWriter(monFichier,true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			String sStackTrace = towrite;
+
+			Date maDate = new Date();
+			bw.write("RobotENSEA-Control-Panel-Dashboard-log : ");
+			bw.write(maDate.toString());
+			bw.newLine();
+			bw.write(sStackTrace);
+			bw.newLine();
+			bw.close();
+			console.append("Veuillez vous référer au fichier de journal créé.\n");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			console.append("Le fichier de journal 'robotensea_log.log' n'a pas pu être créé/édité.\n");
 			console.append("Veuillez vous referer à la console du terminal.");
 		}
 	}
@@ -237,6 +269,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 			out.println(comnd);
 			console.append("Sended : ");
 			console.append(comnd);
+			console.append("\n");
 		} catch (Exception ex) {
 			console.append("Erreur de communication avec le robot.\n");
 			errorLogFunction(ex);
@@ -247,11 +280,14 @@ class RobotENSEA extends JFrame implements ActionListener{
 	public String rcvComm(Socket socket){
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			return in.readLine();
+			String sout = "";
+			sout+=in.readLine();
+			sout+="\n";
+			return sout;
 		} catch (Exception ex){
 			console.append("Erreur de communication avec le robot.\n");
 			errorLogFunction(ex);
-			return "Error";
+			return "";
 		}
 	}
 
