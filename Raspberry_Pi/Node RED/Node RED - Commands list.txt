@@ -6,3 +6,4 @@
 - 'carbmono' --> lecture de la teneur en CO
 - 'motor:['left'|'right'];['forward'|'backward'|'stop']' --> contrôle des moteurs (à revoir)
 - 'file:[]' --> contrôle des données
+- 'ping' --> contrôle de présence et de réponse
