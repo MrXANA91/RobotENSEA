@@ -6,3 +6,4 @@ Lors de l'initialisation de la connexion :
 	- 'press_tp' --> lecture de la pression et de la température
 	- 'carbmono' --> lecture de la teneur en CO
 	- 'motor:['left'|'right'];['forward'|'backward'|'stop'];['full'|'stop']' --> contrôle des moteurs (à revoir)
+	- 'file:[]]' --> contrôle des données
