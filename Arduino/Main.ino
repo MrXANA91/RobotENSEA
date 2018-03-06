@@ -28,7 +28,42 @@ void setup(){
 void loop(){
   // Command handling
   if (stringComplete) {
-
+	if (inputString.equals("ping\n")){
+		// Test de la connexion
+		Serial.println("pong");
+	} else if (inputString.equals("p_t")){
+		// Lecture de la température et de la pression
+		
+	} else if (inputString.equals("cm")){
+		// Lecture de la teneur en CO
+		
+	} else if (inputString.equals("m_f")){
+		// Motor : Move Forward
+		
+	} else if (inputString.equals("m_b")){
+		// Motor : Move Backward
+		
+	} else if (inputString.equals("m_s")){
+		// Motor : Stop
+	
+	} else if (inputString.equals("m_l")){
+		// Motor : rotate left
+		
+	} else if (inputString.equals("m_r")){
+		// Motor : rotate right
+		
+	} else if (inputString.equals("u_1")){
+		// Lecture ultrason 1
+		
+	} else if (inputString.equals("u_2")){
+		// Lecture ultrason 2
+		
+	} else if (inputString.equals("u_3")){
+		// Lecture ultrason 3
+	
+	} else if (inputString.equals("u_4")){
+		// Lecture ultrason 4
+	
     // clear the string:
     inputString = "";
     stringComplete = false;
