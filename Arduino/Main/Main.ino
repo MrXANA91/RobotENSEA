@@ -5,6 +5,7 @@
 // Include libraries :
 #include <MS5803_02BA.h>
 #include <MQ7.h>
+#include <Moteur.h>
 
 // ---------- Variables globales ----------
 // - Numéro de broches :
@@ -33,6 +34,8 @@ void setup(){
 void loop(){
 	// Variables temporaires
 	char buf[50] = "";
+  int co = 0;
+  int co_bool = 0;
 	// Command handling
 	if (stringComplete) {
 		if (inputString.equals("ping\n")){
@@ -40,37 +43,35 @@ void loop(){
 			Serial.println("pong");
 		} else if (inputString.equals("pt_r_256")){
 			// Lecture de la température et de la pression (OSR 256)
-			pt_sensor.getValues(P,TEMP,256);
+			pt_sensor.getValues(&P,&TEMP,256);
 			ltoa(TEMP, buf, 10);
-			Serial.println(TEMP)
-			ltoa(P, buf, 10);
-			Serial.println(P);
+			Serial.println(TEMP);
 		} else if (inputString.equals("pt_r_512")){
 			// Lecture de la température et de la pression (OSR 512)
-			pt_sensor.getValues(P,TEMP,512);
+			pt_sensor.getValues(&P,&TEMP,512);
 			ltoa(TEMP, buf, 10);
-			Serial.println(TEMP)
+			Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
 		} else if (inputString.equals("pt_r_1024")){
 			// Lecture de la température et de la pression (OSR 1024)
-			pt_sensor.getValues(P,TEMP,1024);
+			pt_sensor.getValues(&P,&TEMP,1024);
 			ltoa(TEMP, buf, 10);
-			Serial.println(TEMP)
+			Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
 		} else if (inputString.equals("pt_r_2048")){
 			// Lecture de la température et de la pression (OSR 2048)
-			pt_sensor.getValues(P,TEMP,2048);
+			pt_sensor.getValues(&P,&TEMP,2048);
 			ltoa(TEMP, buf, 10);
-			Serial.println(TEMP)
+			Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
 		} else if (inputString.equals("pt_r_4096")){
 			// Lecture de la température et de la pression (OSR 4096)
-			pt_sensor.getValues(P,TEMP,4096);
+			pt_sensor.getValues(&P,&TEMP,4096);
 			ltoa(TEMP, buf, 10);
-			Serial.println(TEMP)
+			Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
 		} else if (inputString.equals("pt_reset")){
@@ -78,10 +79,10 @@ void loop(){
 			pt_sensor.resetSensor();
 		} else if (inputString.equals("cm_val")){
 			// Lecture de la teneur en monoxyde de carbone
-			Serial.println(MQ7.getValue());
+			Serial.println(co_sensor.getValue());
 		} else if (inputString.equals("cm_warn")){
 			// Lecture avertissement (monoxyde de carbone)
-			Serial.println(MQ7.isThereCO());
+			Serial.println(co_sensor.isThereCO());
 		} else if (inputString.equals("m_f")){
 			// Motor : Move Forward
 		
