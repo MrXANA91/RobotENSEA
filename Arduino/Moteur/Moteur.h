@@ -19,6 +19,11 @@ class Moteur
 		void arret();
 		
 	private:
-		int ML_p, int ML_m, int MR_p, int MR_m, int ENL, int ENR;
+		int ML_p;
+		int ML_m;
+		int MR_p;
+		int MR_m;
+		int ENL;
+		int ENR;
 }
 #endif Moteur
