@@ -3,8 +3,8 @@
 *Moteur.h
 */
 
-#ifndef Moteur
-#define Moteur
+#ifndef Moteur_H
+#define Moteur_H
 
 #include "Arduino.h"
 
@@ -25,5 +25,5 @@ class Moteur
 		int MR_m;
 		int ENL;
 		int ENR;
-}
-#endif Moteur
+};
+#endif

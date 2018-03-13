@@ -1,7 +1,7 @@
 #include "Moteur.h"
-#onclude "Arduino.h"
+#include "Arduino.h"
 
-Moteur::Moteur(int_ML_p, int _ML_m, int _MR_p, int _MR_m, int _ENL, int _ENR)
+Moteur::Moteur(int _ML_p, int _ML_m, int _MR_p, int _MR_m, int _ENL, int _ENR)
 {
 	ML_p=_ML_p;
 	ML_m=_ML_m;

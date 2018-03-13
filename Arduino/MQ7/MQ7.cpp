@@ -19,6 +19,6 @@ int MQ7::getValue(){
 	return analogRead(an_IN);
 }
 
-int MQ7:isThereCO(){
+int MQ7::isThereCO(){
 	return digitalRead(dig_IN);
 }

@@ -18,6 +18,6 @@ class MQ7
 	
 	private:
 		int dig_IN,an_IN;
-}
+};
 
 #endif
