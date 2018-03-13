@@ -9,7 +9,8 @@ Moteur::Moteur(int_ML_p, int _ML_m, int _MR_p, int _MR_m, int _ENL, int _ENR)
 	MR_m=_MR_m;
 	ENL=_ENL;
 	ENR=_ENR;
-	/
+	analogWrite(ENL,43);
+	analogWrite(ENR,43);
 }
 	
 void Moteur::avance(){
