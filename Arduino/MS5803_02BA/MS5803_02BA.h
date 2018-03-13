@@ -8,6 +8,10 @@
 #include "Arduino.h"
 #include <SPI.h>
 
+// constantes d'erreur
+#define MS5803_02BA_OK 0
+#define MS5803_02BA_OSR 1
+
 // constantes de commandes
 const int RESET = 0x1E;
 const int CONVERTD1_256 = 0x40;
@@ -23,10 +27,6 @@ const int CONVERTD2_4096 = 0x58;
 const int ADC_READ = 0x00;
 const int PROM_READ = 0xA0;
 const int NONE = 0x00;
-
-// constantes d'erreur
-#define MS5803_02BA_OK 0
-#define MS5803_02BA_OSR 1
 
 class MS5803_02BA
 {
