@@ -12,6 +12,12 @@
 const int cSPin = 7;
 const int dig_IN = 2;
 const int an_IN = A0;
+const int ML_p = 3;
+const int ML_m = 4;
+const int MR_p = 7;
+const int MR_m = 8;
+const int ENL = 5;
+const int ENR = 6;
 // - Variables de mémoire
 unsigned long TEMP,P = 0;		// température et pression
 String inputString = "";         // a string to hold incoming data
@@ -19,7 +25,8 @@ boolean stringComplete = false;  // whether the string is complete
 
 // - Périphériques :
 MS5803_02BA pt_sensor(cSPin); // capteur de pression et de température
-MQ7 co_sensor(dig_IN,an_IN); // sonde à monoxyde de carbone
+MQ7 co_sensor(dig_IN, an_IN); // sonde à monoxyde de carbone
+Moteur moteur(ML_p, ML_m, MR_p, MR_m, ENL, ENR); // moteur
 
 void setup(){
 	// initialize serial:
@@ -85,19 +92,19 @@ void loop(){
 			Serial.println(co_sensor.isThereCO());
 		} else if (inputString.equals("m_f")){
 			// Motor : Move Forward
-		
+		  moteur.avance();
 		} else if (inputString.equals("m_b")){
 			// Motor : Move Backward
-		
+		  moteur.recul();
 		} else if (inputString.equals("m_s")){
 			// Motor : Stop
-	
+	    moteur.arret();
 		} else if (inputString.equals("m_l")){
 			// Motor : rotate left
-		
+		  moteur.gauche();
 		} else if (inputString.equals("m_r")){
 			// Motor : rotate right
-		
+		  moteur.droite();
 		} else if (inputString.equals("u_1")){
 			// Lecture ultrason 1
 		
