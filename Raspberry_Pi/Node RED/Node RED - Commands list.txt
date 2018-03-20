@@ -2,8 +2,8 @@
 - 'diagnose' --> diagnostic complet des périphériques (réponse ? Si oui lecture, si non erreur)
 - 'mode:['manual'|'semiauto']' --> mode (par défaut, semiauto ?)
 - 'ultrasnd:['1'|'2'|'3'|'4']' --> lecture de la distance
-- 'press_tp' --> lecture de la pression et de la température
-- 'carbmono' --> lecture de la teneur en CO
-- 'motor:['left'|'right'|'forward'|'backward'|'stop']' --> contrôle des moteurs (à revoir)
+- 'press_tp:['256'|'512'|'1024'|'2048'|'4096'|'reset'] --> lecture de la pression et de la température
+- 'carbmono:['value'|'warn'] --> lecture de la teneur en CO
+- 'motor:['left'|'right'|'forward'|'backward'|'stop'|'status']' --> contrôle des moteurs (à revoir)
 - 'file:[]' --> contrôle des données
 - 'ping' --> contrôle de présence et de réponse

@@ -4,3 +4,4 @@ recul	KEYWORD2
 droite	KEYWORD2
 gauche	KEYWORD2
 arret	KEYWORD2
+getStatus	KEYWORD2

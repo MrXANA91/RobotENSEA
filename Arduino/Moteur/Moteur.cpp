@@ -9,6 +9,7 @@ Moteur::Moteur(int _ML_p, int _ML_m, int _MR_p, int _MR_m, int _ENL, int _ENR)
 	MR_m=_MR_m;
 	ENL=_ENL;
 	ENR=_ENR;
+	status = 0.0;
 	analogWrite(ENL,43);
 	analogWrite(ENR,43);
 }
@@ -18,28 +19,37 @@ void Moteur::avance(){
 	digitalWrite(ML_m,0);
 	digitalWrite(MR_p,1);
 	digitalWrite(MR_m,0);
+	status = 1;
 }
 void Moteur::droite(){
 	digitalWrite(ML_p,1);
 	digitalWrite(ML_m,0);
 	digitalWrite(MR_p,0);
 	digitalWrite(MR_m,1);
+	status = 0.5;
 }
 void Moteur::gauche(){
 	digitalWrite(ML_p,0);
 	digitalWrite(ML_m,1);
 	digitalWrite(MR_p,1);
 	digitalWrite(MR_m,0);
+	status = -0.5;
 }
 void Moteur::recul(){
 	digitalWrite(ML_p,0);
 	digitalWrite(ML_m,1);
 	digitalWrite(MR_p,0);
 	digitalWrite(MR_m,1);
+	status = -1.0;
 }
 void Moteur::arret(){
 	digitalWrite(ML_p,0);
 	digitalWrite(ML_m,0);
 	digitalWrite(MR_p,0);
 	digitalWrite(MR_m,0);
+	status = 0.0;
+}
+
+float Moteur::getStatus(void){
+	return status;
 }

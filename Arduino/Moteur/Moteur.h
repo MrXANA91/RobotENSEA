@@ -17,6 +17,7 @@ class Moteur
 		void droite();
 		void gauche();
 		void arret();
+		float getStatus();
 		
 	private:
 		int ML_p;
@@ -25,5 +26,7 @@ class Moteur
 		int MR_m;
 		int ENL;
 		int ENR;
+		
+		float status;
 };
 #endif
