@@ -37,6 +37,7 @@ class MS5803_02BA
 		// Fonctions/méthodes
 		void resetSensor(void);
 		int getValues(unsigned long*,unsigned long*,int);
+		int diagnose(void);
 		
 	private:
 		// Pin CS

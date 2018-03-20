@@ -1,3 +1,4 @@
 MQ7	KEYWORD1
 isThereCO	KEYWORD2
 getValue	KEYWORD2
+diagnose	KEYWORD2

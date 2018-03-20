@@ -42,3 +42,11 @@ unsigned long HC_SR04::getTime(void){
 	
 	return time_var;
 }
+
+// @brief : outil de diagnostique automatisé
+// 0 -> OK ; 1 -> not responding .
+int HC_SR04::diagnose(void){
+	int ret=0;
+	
+	return ret;
+}

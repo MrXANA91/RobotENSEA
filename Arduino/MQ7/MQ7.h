@@ -15,6 +15,7 @@ class MQ7
 		
 		int getValue();
 		int isThereCO();
+		int diagnose(void);
 	
 	private:
 		int dig_IN,an_IN;

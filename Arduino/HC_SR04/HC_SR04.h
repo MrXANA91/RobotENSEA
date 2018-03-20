@@ -18,6 +18,7 @@ class HC_SR04
 		int getTrig();
 		int getEcho();
 		unsigned long getTime();
+		int diagnose(void);
 		
 	private:
 		int trig,echo;

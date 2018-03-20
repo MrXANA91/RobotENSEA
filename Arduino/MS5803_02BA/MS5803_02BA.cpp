@@ -206,3 +206,18 @@ void MS5803_02BA::temperatureCompensatedPressure(unsigned long* pression, unsign
 
   (*pression) = (D1*SENS/( pow(2,21) ) - OFF)/( pow(2,15) );          // P = D1*SENS - OFF
 }
+
+// @brief : outil de diagnostique automatisé.
+// 0 -> OK ; -1 -> const null ; 1 -> const not in range .
+int MS5803_02BA::diagnose(void){
+	// réinitialisation du capteur
+	resetSensor();
+	// analyse des constantes
+	if ( (C1==0) || (C2==0) || (C3==0) || (C4==0) || (C5==0) || (C6==0) ){
+		return -1;
+	}
+	if ( (C1>51372) || (C1<41372) || (C2>48981) || (C2<38981) || (C3>34059) || (C3<24059) || (C4>32842) || (C4<22842) || (C5>36553) || (C5<26553) || (C6>33165) || (C6<23165){
+		return 1;
+	}
+	return 0;
+}
