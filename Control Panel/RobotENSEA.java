@@ -51,7 +51,8 @@ class RobotENSEA extends JFrame implements ActionListener{
 		m_dash.add(m_dash_exit);
 
 		m.add(m_dash);
-
+		
+		/*
 		// Menu "Import/Export"
 		JMenu m_impexp = new JMenu("Instructions");
 		// Sous-menu "Export"
@@ -64,6 +65,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 		m_impexp.add(m_impexp_imp);
 
 		m.add(m_impexp);
+		*/
 
 		// Menu "A propos"
 		JMenu m_about = new JMenu("About/Help");
@@ -196,6 +198,8 @@ class RobotENSEA extends JFrame implements ActionListener{
 		} else if(cmd.equalsIgnoreCase("clear") || cmd.equalsIgnoreCase("effacer")) {
 			console.setText("");
 			cleared = true;
+		} else if(cmd.equalsIgnoreCase("movecontrol")){
+			Window_MoveControl test = new Window_MoveControl("Test",100,100,480,480);
 		} else {
 			console.append("Erreur : Commande inconnue '"+cmd+"'\nTapez 'help' ou 'aide' pour une liste des commandes disponibles.");
 		}
