@@ -144,10 +144,17 @@ void loop(){
       valtime = ultrasnd_4.getTime();
       ltoa(valtime, buf, 10);
       Serial.println(valtime);
+		} else if (inputString.equals("diag")){
+      Serial.println(pt_sensor.diagnose());
+      Serial.println(co_sensor.diagnose());
+      Serial.println(ultrasnd_1.diagnose());
+      Serial.println(ultrasnd_2.diagnose());
+      Serial.println(ultrasnd_3.diagnose());
+      Serial.println(ultrasnd_4.diagnose());
 		} else {
 		
 		}
-		Serial.println("OK");
+		Serial.println("END");
 		// clear the string:
 		inputString = "";
 		stringComplete = false;
