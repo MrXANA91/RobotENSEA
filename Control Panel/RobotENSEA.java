@@ -199,7 +199,11 @@ class RobotENSEA extends JFrame implements ActionListener{
 			console.setText("");
 			cleared = true;
 		} else if(cmd.equalsIgnoreCase("movecontrol")){
-			Window_MoveControl test = new Window_MoveControl("Test",100,100,480,480);
+			if(!connected){
+				console.append("Connexion au robot inexistante.");
+			} else {
+				Window_MoveControl test = new Window_MoveControl("Test",100,100,480,480);
+			}
 		} else {
 			console.append("Erreur : Commande inconnue '"+cmd+"'\nTapez 'help' ou 'aide' pour une liste des commandes disponibles.");
 		}
