@@ -26,9 +26,8 @@ int MQ7::isThereCO(){
 // @brief : outil de diagnostique automatisé
 // 0 -> OK ; -1 -> value null .
 int MQ7::diagnose(void){
-	int ret=0;
 	if (getValue() == 0){
-		ret=-1;
+		return -1;
 	}
-	return ret;
+	return 0;
 }
