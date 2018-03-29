@@ -62,89 +62,89 @@ void loop(){
 		if (inputString.equals("ping\n")){
 		  // Test de la connexion
 			Serial.println("pong");
-		} else if (inputString.equals("pt_r_256")){
+		} else if (inputString.equals("pt_r_256\n")){
 			// Lecture de la température et de la pression (OSR 256)
 			pt_sensor.getValues(&P,&TEMP,256);
 			ltoa(TEMP, buf, 10);
       Serial.println(TEMP);
       ltoa(P, buf, 10);
       Serial.println(P);
-		} else if (inputString.equals("pt_r_512")){
+		} else if (inputString.equals("pt_r_512\n")){
 			// Lecture de la température et de la pression (OSR 512)
 			pt_sensor.getValues(&P,&TEMP,512);
 			ltoa(TEMP, buf, 10);
       Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
-		} else if (inputString.equals("pt_r_1024")){
+		} else if (inputString.equals("pt_r_1024\n")){
 			// Lecture de la température et de la pression (OSR 1024)
 			pt_sensor.getValues(&P,&TEMP,1024);
 			ltoa(TEMP, buf, 10);
       Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
-		} else if (inputString.equals("pt_r_2048")){
+		} else if (inputString.equals("pt_r_2048\n")){
 			// Lecture de la température et de la pression (OSR 2048)
 			pt_sensor.getValues(&P,&TEMP,2048);
 			ltoa(TEMP, buf, 10);
       Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
-		} else if (inputString.equals("pt_r_4096")){
+		} else if (inputString.equals("pt_r_4096\n")){
 			// Lecture de la température et de la pression (OSR 4096)
 			pt_sensor.getValues(&P,&TEMP,4096);
 			ltoa(TEMP, buf, 10);
       Serial.println(TEMP);
 			ltoa(P, buf, 10);
 			Serial.println(P);
-		} else if (inputString.equals("pt_reset")){
+		} else if (inputString.equals("pt_reset\n")){
 			// Remise à zéro du capteur de pression
 			pt_sensor.resetSensor();
-		} else if (inputString.equals("cm_val")){
+		} else if (inputString.equals("cm_val\n")){
 			// Lecture de la teneur en monoxyde de carbone
 			Serial.println(co_sensor.getValue());
-		} else if (inputString.equals("cm_warn")){
+		} else if (inputString.equals("cm_warn\n")){
 			// Lecture avertissement (monoxyde de carbone)
 			Serial.println(co_sensor.isThereCO());
-		} else if (inputString.equals("m_stat")){
+		} else if (inputString.equals("m_stat\n")){
       // Motor : retourne le status courant
       Serial.println(moteur.getStatus());
-		} else if (inputString.equals("m_f")){
+		} else if (inputString.equals("m_f\n")){
 			// Motor : Move Forward
 		  moteur.avance();
-		} else if (inputString.equals("m_b")){
+		} else if (inputString.equals("m_b\n")){
 			// Motor : Move Backward
 		  moteur.recul();
-		} else if (inputString.equals("m_s")){
+		} else if (inputString.equals("m_s\n")){
 			// Motor : Stop
 	    moteur.arret();
-		} else if (inputString.equals("m_l")){
+		} else if (inputString.equals("m_l\n")){
 			// Motor : rotate left
 		  moteur.gauche();
-		} else if (inputString.equals("m_r")){
+		} else if (inputString.equals("m_r\n")){
 			// Motor : rotate right
 		  moteur.droite();
-		} else if (inputString.equals("u_1")){
+		} else if (inputString.equals("u_1\n")){
 			// Lecture ultrason 1
       valtime = ultrasnd_1.getTime();
       ltoa(valtime, buf, 10);
       Serial.println(valtime);
-		} else if (inputString.equals("u_2")){
+		} else if (inputString.equals("u_2\n")){
 			// Lecture ultrason 2
       valtime = ultrasnd_2.getTime();
       ltoa(valtime, buf, 10);
       Serial.println(valtime);
-		} else if (inputString.equals("u_3")){
+		} else if (inputString.equals("u_3\n")){
 			// Lecture ultrason 3
       valtime = ultrasnd_3.getTime();
       ltoa(valtime, buf, 10);
       Serial.println(valtime);
-		} else if (inputString.equals("u_4")){
+		} else if (inputString.equals("u_4\n")){
 			// Lecture ultrason 4
       valtime = ultrasnd_4.getTime();
       ltoa(valtime, buf, 10);
       Serial.println(valtime);
-		} else if (inputString.equals("diag")){
+		} else if (inputString.equals("diag\n")){
       Serial.println(pt_sensor.diagnose());
       Serial.println(co_sensor.diagnose());
       Serial.println(ultrasnd_1.diagnose());
@@ -152,7 +152,7 @@ void loop(){
       Serial.println(ultrasnd_3.diagnose());
       Serial.println(ultrasnd_4.diagnose());
 		} else {
-		
+		  Serial.println("UKCMD");
 		}
 		Serial.println("END");
 		// clear the string:
