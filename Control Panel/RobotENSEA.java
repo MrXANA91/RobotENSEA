@@ -101,6 +101,8 @@ class RobotENSEA extends JFrame implements ActionListener{
 
 		// --------------------------------------------------------
 		setVisible(true);
+		
+		System.out.println("RobotENSEA : start up...");
 	}
 
 	// ----- Gestion des évènements (ActionListener) ----------
@@ -115,30 +117,36 @@ class RobotENSEA extends JFrame implements ActionListener{
 				System.exit(0);
 			}
 		} else if(cmd.equalsIgnoreCase("connect")){
-			console.append("Connexion au robot...\n");
-			try {
-				InetAddress serveur = InetAddress.getByName("172.24.1.1");
-				socket = new Socket(serveur,63744);
-				connected = true;
-				console.append("Connexion réussie !\n");
-			} catch (Exception ex) {
-				console.append("Erreur de connexion au robot.\n");
-				errorLogFunction(ex);
-			}
-			if (connected) {
+			// =========================== Connexion au robot ===============================================
+			if (!connected) {
+				console.append("Connexion au robot...\n");
 				try {
-					console.append("Mise à jour de l'horloge interne du robot.\n");
-					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-					PrintStream out = new PrintStream(socket.getOutputStream());
-					String comnd = "init:"+String.valueOf(timestamp.getTime());
-					out.println(comnd);
-					console.append("Initialisation terminée.");
+					InetAddress serveur = InetAddress.getByName("172.24.1.1");
+					socket = new Socket(serveur,63744);
+					connected = true;
+					console.append("Connexion réussie !\n");
 				} catch (Exception ex) {
-					console.append("Erreur de communication avec le robot.\n");
+					console.append("Erreur de connexion au robot.\n");
 					errorLogFunction(ex);
 				}
+				if (connected) {
+					try {
+						console.append("Initialisation du robot.\n");
+						Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+						PrintStream out = new PrintStream(socket.getOutputStream());
+						String comnd = "init:"+String.valueOf(timestamp.getTime());
+						out.println(comnd);
+						console.append("Initialisation terminée.");
+					} catch (Exception ex) {
+						console.append("Erreur de communication avec le robot.\n");
+						errorLogFunction(ex);
+					}
+				}
+			} else {
+				console.append("Connexion au robot déjà établie.\n");
 			}
 		} else if(cmd.equalsIgnoreCase("connectTest")){
+			// =========================== TEST DE CONNEXION (à retirer) ===============================================
 			console.append("Connexion au robot...\n");
 			try {
 				InetAddress serveur = InetAddress.getByName("192.168.0.44");
@@ -152,29 +160,43 @@ class RobotENSEA extends JFrame implements ActionListener{
 				errorLogFunction(ex);
 			}
 		} else if(cmd.equalsIgnoreCase("disconnect")){
+			// =========================== Déconnexion simple du robot ===============================================
 			if (connected){
 				try {
 					socket.close();
 					connected = false;
 					console.append("Déconnexion réussie !");
 				} catch (Exception ex) {
-					console.append("Erreur de déconnexion au robot.\n");
+					console.append("Erreur de déconnexion au robot.");
 					errorLogFunction(ex);
 				}
 			} else {
 				console.append("Connexion au robot inexistante.");
 			}
+		} else if(cmd.equalsIgnoreCase("shutdown")){
+			// =========================== Extinction et déconnexion du robot ===============================================
+			if (connected){
+				try {
+					console.append("Envoi de l'ordre d'extinction à distance du robot...\n");
+					PrintStream out = new PrintStream(socket.getOutputStream());
+					String comnd = "shutdown";
+					out.println(comnd);
+					console.append("Déconnexion en cours...\n");
+					socket.close();
+					connected = false;
+					console.append("Déconnexion réussie !\n");
+					console.append("Vous pourrez déconnecter l'alimentation de la Raspberry Pi.");
+				} catch (Exception ex) {
+					console.append("Erreur de déconnexion complète du robot.");
+					errorLogFunction(ex);
+				}
+			}
 		} else if(cmd.toLowerCase().startsWith("send")){
+			// =========================== Envoi d'une instruction au robot ===============================================
 			String parts[] = cmd.split(" ");
 			String sout;
 			if (connected && parts.length==2){
 				sendComm(parts[1],socket);
-				sout = rcvComm(socket);
-				if (sout.equals(null)){
-					console.append("Nothing came from the robot.");
-				} else {
-					classicLogFunction(sout);
-				}
 			} else {
 				if (!connected){
 					console.append("Connexion au robot inexistante.");
@@ -182,12 +204,30 @@ class RobotENSEA extends JFrame implements ActionListener{
 				if (parts.length!=2){
 					console.append("Utilisation : send [command]:[args]");
 				}
-				
 			}
-		} else if(cmd.equalsIgnoreCase("authors")){			// Menu "A propos"
+		} else if (cmd.equalsIgnoreCase("read")){
+			// =========================== Reception de données du robot ===============================================
+			String parts[] = cmd.split(" ");
+			String sout;
+			if (connected && parts.length==1){
+				sout = rcvComm(socket);
+				console.append("Received : ");
+				console.append(sout);
+				console.append("\n");
+			} else {
+				if (!connected){
+					console.append("Connexion au robot inexistante.");
+				}
+				if (parts.length!=1){
+					console.append("Utilisation : read");
+				}
+			}
+		} else if(cmd.equalsIgnoreCase("authors")){
+		// =========================== Menu "A propos" ===============================================
 			console.append("Tu as appuyé sur "+cmd+"");
 			msg.showMessageDialog(this,"Projet de deuxième année : RobotENSEA.\nMené par Paul DAVIAU et Paul CHANVIN\nAnnée 2017-2018");
 		} else if(cmd.equalsIgnoreCase("aide") || cmd.equalsIgnoreCase("help")){
+			// =========================== Aide ===============================================
 			console.append("Liste des commandes disponibles :\n");
 			console.append("- 'exit' : quitte le panneau de contrôle ;\n");
 			console.append("- 'authors' : message des auteurs ;\n");
@@ -195,16 +235,20 @@ class RobotENSEA extends JFrame implements ActionListener{
 			console.append("- 'clear' : efface cette présente fenêtre ;\n");
 			console.append("- 'connect'/'disconnect' : se connecte ou se déconnecte au/du robot ;\n");
 			console.append("- 'send [cmd]' : envoie la commande 'cmd' au robot lorsqu'il est connecté ;\n");
+			console.append("- 'shutdown' : éteint complètement le robot.");
 		} else if(cmd.equalsIgnoreCase("clear") || cmd.equalsIgnoreCase("effacer")) {
+			// =========================== Effacer la fenêtre ===============================================
 			console.setText("");
 			cleared = true;
 		} else if(cmd.equalsIgnoreCase("movecontrol")){
+			// =========================== Ouverture de la fenêtre de contrôle du robot ===============================================
 			if(!connected){
 				console.append("Connexion au robot inexistante.");
 			} else {
 				Window_MoveControl test = new Window_MoveControl("Test",100,100,480,480);
 			}
 		} else {
+			// =========================== Commande inconnue ===============================================
 			console.append("Erreur : Commande inconnue '"+cmd+"'\nTapez 'help' ou 'aide' pour une liste des commandes disponibles.");
 		}
 		if (cleared) {
@@ -289,8 +333,15 @@ class RobotENSEA extends JFrame implements ActionListener{
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String sout = "";
-			sout+=in.readLine();
-			sout+="\n";
+			String recept = "";
+			if (!in.ready()){
+				recept = in.readLine();
+			} else {
+				recept = "NONE";
+			}
+			// ============ RECEPT MANAGEMENT ===================
+			sout = recept;
+			// ==================================================
 			return sout;
 		} catch (Exception ex){
 			console.append("Erreur de communication avec le robot.\n");
