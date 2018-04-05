@@ -31,7 +31,6 @@ const int echo = 9;
 
 // - Variables de mémoire
 unsigned long TEMP,P = 0;		// température et pression
-unsigned long valtime = 0;  // temps (hc - sr04)
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 
@@ -105,7 +104,7 @@ void loop(){
 			Serial.println(co_sensor.getValue());
 		} else if (inputString.equals("cm_warn\n")){
 			// Lecture avertissement (monoxyde de carbone)
-			Serial.println(co_sensor.isThereCO());
+			Serial.println(co_sensor.isThisSafe());
 		} else if (inputString.equals("m_stat\n")){
       // Motor : retourne le status courant
       Serial.println(moteur.getStatus());
@@ -127,22 +126,22 @@ void loop(){
 		} else if (inputString.equals("u_1\n")){
 			// Lecture ultrason 1
       valtime = ultrasnd_1.getTime();
-      ltoa(valtime, buf, 10);
+      // ltoa(valtime, buf, 10);
       Serial.println(valtime);
 		} else if (inputString.equals("u_2\n")){
 			// Lecture ultrason 2
       valtime = ultrasnd_2.getTime();
-      ltoa(valtime, buf, 10);
+      // ltoa(valtime, buf, 10);
       Serial.println(valtime);
 		} else if (inputString.equals("u_3\n")){
 			// Lecture ultrason 3
       valtime = ultrasnd_3.getTime();
-      ltoa(valtime, buf, 10);
+      // ltoa(valtime, buf, 10);
       Serial.println(valtime);
 		} else if (inputString.equals("u_4\n")){
 			// Lecture ultrason 4
       valtime = ultrasnd_4.getTime();
-      ltoa(valtime, buf, 10);
+      // ltoa(valtime, buf, 10);
       Serial.println(valtime);
 		} else if (inputString.equals("diag\n")){
       Serial.println(pt_sensor.diagnose());
@@ -155,7 +154,9 @@ void loop(){
 		  Serial.println("UKCMD");
 		}
 		Serial.println("END");
-		// clear the string:
+		// clear the string & the variables:
+    P = 0;
+    TEMP = 0;
 		inputString = "";
 		stringComplete = false;
 	}

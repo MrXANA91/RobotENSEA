@@ -14,7 +14,7 @@ class MQ7
 		MQ7(int _dig_IN,int _an_IN);
 		
 		int getValue();
-		int isThereCO();
+		int isThisSafe();
 		int diagnose(void);
 	
 	private:

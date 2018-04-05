@@ -19,7 +19,7 @@ int MQ7::getValue(){
 	return analogRead(an_IN);
 }
 
-int MQ7::isThereCO(){
+int MQ7::isThisSafe(){
 	return digitalRead(dig_IN);
 }
 
