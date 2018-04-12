@@ -144,6 +144,7 @@ void loop(){
       // ltoa(valtime, buf, 10);
       Serial.println(valtime);
 		} else if (inputString.equals("diag\n")){
+      // TOUTES LES FONCTIONS DE DIAGNOSTIQUE SONT A REVOIR
       Serial.println(pt_sensor.diagnose());
       Serial.println(co_sensor.diagnose());
       Serial.println(ultrasnd_1.diagnose());
@@ -151,6 +152,7 @@ void loop(){
       Serial.println(ultrasnd_3.diagnose());
       Serial.println(ultrasnd_4.diagnose());
 		} else {
+      // Commande inconnue
 		  Serial.println("UKCMD");
 		}
 		Serial.println("END");

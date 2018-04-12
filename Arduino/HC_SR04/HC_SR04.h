@@ -12,7 +12,7 @@ class HC_SR04
 {
 	public:
 		// Constructor
-		HC_SR04(int _trig, int _echo);
+		HC_SR04(int trig, int echo);
 		
 		// Fonctions/méthodes
 		int getTrig();
@@ -21,7 +21,7 @@ class HC_SR04
 		int diagnose(void);
 		
 	private:
-		int trig,echo;
+		int _trig, _echo;
 		
 };
 

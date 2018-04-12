@@ -6,44 +6,43 @@
 #include "Arduino.h"
 #include "HC_SR04.h"
 
-// PUBLIC :
 // @brief : constructor
-HC_SR04::HC_SR04(int _trig, int _echo){
+HC_SR04::HC_SR04(int trig, int echo){
 	// Initialisation du ECHO
-	pinMode(_echo,INPUT);
-	echo = _echo;
+	pinMode(echo,INPUT);
+	_echo = echo;
 
 	// Initialisation du TRIG
-	pinMode(_trig,OUTPUT);
-	trig = _trig;
+	pinMode(trig,OUTPUT);
+	_trig = trig;
 }
 
 // @brief : retourne le pin TRIG
 int HC_SR04::getTrig(void){
-	return trig;
+	return _trig;
 }
 
 // @brief : retourne le pin ECHO
 int HC_SR04::getEcho(void){
-	return echo;
+	return _echo;
 }
 
 // @brief : retourne la valeur de la distance jusqu'à l'objet le plus proche
 // 0 si il y a un probleme
 unsigned long HC_SR04::getTime(void){
 	unsigned long time_var;
-	digitalWrite(trig,HIGH);
+	digitalWrite(_trig,HIGH);
     delayMicroseconds(15);
-    digitalWrite(trig,LOW);
+    digitalWrite(_trig,LOW);
 	
 	time_var = micros();
-    while(digitalRead(echo) == LOW){
+    while(digitalRead(_echo) == LOW){
 		if((micros()-time_var)>50000){
 			return 0;
 		}
 	}
     time_var = micros();
-    while(digitalRead(echo) == HIGH){
+    while(digitalRead(_echo) == HIGH){
 		if((micros()-time_var)>50000){
 			return 0;
 		}
@@ -55,20 +54,21 @@ unsigned long HC_SR04::getTime(void){
 
 // @brief : outil de diagnostique automatisé
 // 0 -> OK ; -1 -> not responding ; 1 -> get stuck ; 2 -> value not in range.
+// A REVOIR (ne diagnostique pas correctement le composant)
 int HC_SR04::diagnose(void){
 	unsigned long time_var;
-	digitalWrite(trig,HIGH);
+	digitalWrite(_trig,HIGH);
 	delayMicroseconds(15);
-	digitalWrite(trig,LOW);
+	digitalWrite(_trig,LOW);
 	
 	time_var = micros();
-	while(digitalRead(echo) == LOW){
+	while(digitalRead(_echo) == LOW){
 		if((micros()-time_var)>50000){
 			return -1;
 		}
 	}
     time_var = micros();
-    while(digitalRead(echo) == HIGH){
+    while(digitalRead(_echo) == HIGH){
 		if((micros()-time_var)>50000){
 			return 1;
 		}

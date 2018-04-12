@@ -25,6 +25,7 @@ int MQ7::isThisSafe(){
 
 // @brief : outil de diagnostique automatisé
 // 0 -> OK ; -1 -> value null .
+// A REVOIR (ne diagnostique pas correctement le composant)
 int MQ7::diagnose(void){
 	if (getValue() == 0){
 		return -1;

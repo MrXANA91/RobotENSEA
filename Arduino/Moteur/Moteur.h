@@ -11,7 +11,10 @@
 class Moteur
 {
 	public:
-		Moteur(int _ML_p, int _ML_m, int _MR_p, int _MR_m, int _ENL, int _ENR);
+		// Constructor
+		Moteur(int ML_p, int ML_m, int MR_p, int MR_m, int ENL, int ENR);
+		
+		// Fonctions/méthodes
 		void avance();
 		void recul();
 		void droite();
@@ -20,13 +23,14 @@ class Moteur
 		float getStatus();
 		
 	private:
-		int ML_p;
-		int ML_m;
-		int MR_p;
-		int MR_m;
-		int ENL;
-		int ENR;
+		int _ML_p;
+		int _ML_m;
+		int _MR_p;
+		int _MR_m;
+		int _ENL;
+		int _ENR;
 		
 		float status;
 };
+
 #endif

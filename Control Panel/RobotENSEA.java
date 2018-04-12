@@ -1,3 +1,11 @@
+/*
+	Panneau de contrôle du robot semi-autonome
+	By : DAVIAU Paul & CHANVIN Paul
+	------------------------------------------
+	(Projet ENSEA 2A 2017-2018)
+ */
+
+// Bibliothèques nécessaires :
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import java.awt.*;
@@ -7,11 +15,11 @@ import java.sql.Timestamp;
 import java.lang.*;
 import java.io.*;
 import java.beans.XMLEncoder;
-
 import java.net.*;
 
 class RobotENSEA extends JFrame implements ActionListener{
-
+	
+	// Déclaration de variables globales :
 	JTextField console_cmd;
 	JTextArea console;
 
@@ -20,6 +28,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 	DataInputStream userInput;
 	PrintStream theOutputStream;
 
+	// Constructeur :
 	public RobotENSEA(String titre, int locX, int locY, int sizeX, int sizeY){
 		super(titre);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +42,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 		// ---------- Création des menus --------------
 		JMenuBar m = new JMenuBar();
 
-		// Menu "Control Panel"
+		// ---- Menu "Robot" ----
 		JMenu m_dash = new JMenu("Robot");
 		// Sous-menu "Connecter"
 		JMenuItem m_dash_co = new JMenuItem("Connect");
@@ -51,23 +60,8 @@ class RobotENSEA extends JFrame implements ActionListener{
 		m_dash.add(m_dash_exit);
 
 		m.add(m_dash);
-		
-		/*
-		// Menu "Import/Export"
-		JMenu m_impexp = new JMenu("Instructions");
-		// Sous-menu "Export"
-		JMenuItem m_impexp_exp = new JMenuItem("Export");
-		m_impexp_exp.addActionListener(this);
-		m_impexp.add(m_impexp_exp);
-		// Sous-menu "Importer"
-		JMenuItem m_impexp_imp = new JMenuItem("Import");
-		m_impexp_imp.addActionListener(this);
-		m_impexp.add(m_impexp_imp);
 
-		m.add(m_impexp);
-		*/
-
-		// Menu "A propos"
+		// ---- Menu "A propos" ----
 		JMenu m_about = new JMenu("About/Help");
 		// Sous-menu "Aide"
 		JMenuItem m_about_help = new JMenuItem("Help");
@@ -86,10 +80,12 @@ class RobotENSEA extends JFrame implements ActionListener{
 		// --------------------------------------------------------
 
 		// ------------- Création du panneau console --------------
+		// Barre d'entrée de commandes :
 		console_cmd = new JTextField("");
 		console_cmd.addActionListener(this);
 		contentPane.add(console_cmd,"South");
-
+		
+		// Zone d'affichage :
 		console = new JTextArea("");
 		console.setEditable(false);
 		contentPane.add(console,"Center");
@@ -101,8 +97,6 @@ class RobotENSEA extends JFrame implements ActionListener{
 
 		// --------------------------------------------------------
 		setVisible(true);
-		
-		System.out.println("RobotENSEA : start up...");
 	}
 
 	// ----- Gestion des évènements (ActionListener) ----------
@@ -110,7 +104,8 @@ class RobotENSEA extends JFrame implements ActionListener{
 		String cmd = e.getActionCommand();
 		String console_resp = console.getText();
 		JOptionPane msg = new JOptionPane();
-		if(cmd.equalsIgnoreCase("exit")){				// Menu "Robot"
+		if(cmd.equalsIgnoreCase("exit")){
+			// =========================== Extinction du panneau de contrôle =================================
 			if (connected) {
 				console.append("Veuillez vous déconnecter du robot avant de quitter le panneau de contrôle.");
 			} else {
@@ -122,7 +117,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 				console.append("Connexion au robot...\n");
 				try {
 					InetAddress serveur = InetAddress.getByName("172.24.1.1");
-					socket = new Socket(serveur,63744);
+					socket = new Socket(serveur,63744);  // ip 172.24.1.1 ; port 63744
 					connected = true;
 					console.append("Connexion réussie !\n");
 				} catch (Exception ex) {
@@ -134,7 +129,7 @@ class RobotENSEA extends JFrame implements ActionListener{
 						console.append("Initialisation du robot.\n");
 						Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 						PrintStream out = new PrintStream(socket.getOutputStream());
-						String comnd = "init:"+String.valueOf(timestamp.getTime());
+						String comnd = "init:"+String.valueOf(timestamp.getTime());  // mise à jour de l'horloge de la Raspberry
 						out.println(comnd);
 						console.append("Initialisation terminée.");
 					} catch (Exception ex) {
@@ -144,20 +139,6 @@ class RobotENSEA extends JFrame implements ActionListener{
 				}
 			} else {
 				console.append("Connexion au robot déjà établie.\n");
-			}
-		} else if(cmd.equalsIgnoreCase("connectTest")){
-			// =========================== TEST DE CONNEXION (à retirer) ===============================================
-			console.append("Connexion au robot...\n");
-			try {
-				InetAddress serveur = InetAddress.getByName("192.168.0.44");
-				socket = new Socket(serveur,63744);
-				connected = true;
-				console.append("Connexion réussie !\n");
-				console.append("Mise à jour de l'horloge interne...\n");
-				console.append("Et bah nan haha !");
-			} catch (Exception ex) {
-				console.append("Erreur de connexion au robot.\n");
-				errorLogFunction(ex);
 			}
 		} else if(cmd.equalsIgnoreCase("disconnect")){
 			// =========================== Déconnexion simple du robot ===============================================
@@ -205,23 +186,6 @@ class RobotENSEA extends JFrame implements ActionListener{
 					console.append("Utilisation : send [command]:[args]");
 				}
 			}
-		} else if (cmd.equalsIgnoreCase("read")){
-			// =========================== Reception de données du robot ===============================================
-			String parts[] = cmd.split(" ");
-			String sout;
-			if (connected && parts.length==1){
-				sout = rcvComm(socket);
-				console.append("Received : ");
-				console.append(sout);
-				console.append("\n");
-			} else {
-				if (!connected){
-					console.append("Connexion au robot inexistante.");
-				}
-				if (parts.length!=1){
-					console.append("Utilisation : read");
-				}
-			}
 		} else if(cmd.equalsIgnoreCase("authors")){
 		// =========================== Menu "A propos" ===============================================
 			console.append("Tu as appuyé sur "+cmd+"");
@@ -240,13 +204,6 @@ class RobotENSEA extends JFrame implements ActionListener{
 			// =========================== Effacer la fenêtre ===============================================
 			console.setText("");
 			cleared = true;
-		} else if(cmd.equalsIgnoreCase("movecontrol")){
-			// =========================== Ouverture de la fenêtre de contrôle du robot ===============================================
-			if(!connected){
-				console.append("Connexion au robot inexistante.");
-			} else {
-				Window_MoveControl test = new Window_MoveControl("Test",100,100,480,480);
-			}
 		} else {
 			// =========================== Commande inconnue ===============================================
 			console.append("Erreur : Commande inconnue '"+cmd+"'\nTapez 'help' ou 'aide' pour une liste des commandes disponibles.");
@@ -264,7 +221,10 @@ class RobotENSEA extends JFrame implements ActionListener{
 	// ---------------------FUNCTIONS--------------------------
 	// --------------------------------------------------------
 
-	// Error log function
+	// error Log Function :
+	// @brief : fonction d'écriture de toutes les erreurs dans
+	// un fichier de journal 'robotensea_error.log'.
+	// @arg : 'e' l'erreur renvoyée
 	public void errorLogFunction(Exception e) {
 		try {
 			File monFichier = new File("robotensea_error.log");
@@ -291,6 +251,10 @@ class RobotENSEA extends JFrame implements ActionListener{
 		}
 	}
 	
+	// classic log function :
+	// @brief : fonction d'écriture de rapports quelconques dans
+	// un fichier de journal 'robotensea_log.log'.
+	// @arg : 'towrite' une chaîne de caractères
 	public void classicLogFunction(String towrite) {
 		try {
 			File monFichier = new File("robotensea_log.log");
@@ -315,6 +279,8 @@ class RobotENSEA extends JFrame implements ActionListener{
 	}
 
 	// send command
+	// @brief : simple commande d'envoi d'instruction
+	// @arg : 'comnd' la commande à envoyer et 'socket' le socket courant.
 	public void sendComm(String comnd, Socket socket){
 		try {
 			PrintStream out = new PrintStream(socket.getOutputStream());
@@ -329,6 +295,10 @@ class RobotENSEA extends JFrame implements ActionListener{
 	}
 
 	// receive command
+	// @brief : commande de réception de données
+	// @arg : 'socket' le socket courant.
+	// ATTENTION : FONCTION INCOMPLETE ET NON UTILISEE
+	//	(soucis de gestion des buffers de reception)
 	public String rcvComm(Socket socket){
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

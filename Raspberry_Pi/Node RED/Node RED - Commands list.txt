@@ -7,3 +7,5 @@
 - 'motor:['left'|'right'|'forward'|'backward'|'stop'|'status']' --> contrôle des moteurs (à revoir)
 - 'file:[]' --> contrôle des données
 - 'ping' --> contrôle de présence et de réponse
+- 'shutdown' --> extinction complète de la raspberry
+- 'camera:[filename.jpg]' --> prise de photo

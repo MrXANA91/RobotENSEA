@@ -209,6 +209,7 @@ void MS5803_02BA::temperatureCompensatedPressure(unsigned long* pression, unsign
 
 // @brief : outil de diagnostique automatisé.
 // 0 -> OK ; -1 -> const null ; 1 -> const not in range .
+// A REVOIR (ne diagnostique pas correctement le composant)
 int MS5803_02BA::diagnose(void){
 	// réinitialisation du capteur
 	resetSensor();
